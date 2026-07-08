@@ -1,0 +1,7 @@
+
+start development server 
+    ->  npm run dev
+    -> open http://localhost:port_no
+    [Note: only the static build file is get served]
+
+to keep track of UI changes run client development manually in another terminal, make sure to keep cors in considerations 

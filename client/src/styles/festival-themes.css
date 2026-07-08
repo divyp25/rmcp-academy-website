@@ -1,0 +1,805 @@
+/* =========================================
+   FESTIVAL THEMES DECORATIONS
+   ========================================= */
+
+/* --- GENERAL THEMED ELEMENT PREPARATION --- */
+/* We target common card, popup, and banner classes */
+body[class*="theme-"] .glass-panel,
+body[class*="theme-"] .glass-panel-dark,
+body[class*="theme-"] .bg-white.rounded-xl,
+body[class*="theme-"] .bg-white.rounded-2xl,
+body[class*="theme-"] .bg-white.shadow-lg,
+body[class*="theme-"] .bg-white.shadow-xl,
+body[class*="theme-"] .festival-decoratable {
+  position: relative;
+  overflow: visible !important; /* Allow decorators to hang outside slightly */
+}
+
+/* 
+  Since img tags cannot have pseudo-elements, we apply a subtle glowing border
+  or shadow to images themselves, while applying the heavy decorations to their containers.
+*/
+body[class*="theme-"] img.rounded-xl,
+body[class*="theme-"] img.rounded-2xl,
+body[class*="theme-"] img.rounded-lg {
+  transition: all 0.3s ease;
+}
+
+/* =========================================
+   1. DIWALI (Warm Gold & Elegant Glowing)
+   ========================================= */
+body.theme-diwali {
+  /* Subtle warm vignette on the whole page */
+  box-shadow: inset 0 0 100px rgba(255, 165, 0, 0.03);
+}
+
+/* --- Interactive Elegant Golden Glow for Images --- */
+@keyframes candlePulse {
+  0% { box-shadow: 0 4px 15px rgba(255, 215, 0, 0.1); border-color: rgba(255, 215, 0, 0.15); }
+  100% { box-shadow: 0 8px 25px rgba(255, 140, 0, 0.2); border-color: rgba(255, 165, 0, 0.15); }
+}
+
+body.theme-diwali img {
+  border: 2px solid transparent;
+  animation: candlePulse 2.5s infinite alternate ease-in-out;
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.theme-diwali img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2) !important;
+  border-color: rgba(255, 215, 0, 0.15) !important;
+  animation: none; /* Stop pulsing and stay bright on hover */
+}
+
+/* --- Elegant Shimmering Gold Top Border --- */
+body.theme-diwali .glass-panel-dark,
+body.theme-diwali .bg-white.rounded-xl,
+body.theme-diwali .bg-white.rounded-2xl {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+body.theme-diwali header::after,
+body.theme-diwali .glass-panel::after,
+body.theme-diwali .glass-panel-dark::after,
+body.theme-diwali .bg-white.rounded-xl::after,
+body.theme-diwali .bg-white.rounded-2xl::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #FF9933, #FFD700, #FFF8DC, #FFD700, #FF9933);
+  background-size: 200% 100%;
+  animation: goldShimmer 3s infinite linear;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  box-shadow: 0 2px 10px rgba(255, 215, 0, 0.1);
+  transition: all 0.3s ease;
+  z-index: 50;
+  pointer-events: none;
+}
+
+@keyframes goldShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+body.theme-diwali .glass-panel:hover::after,
+body.theme-diwali .bg-white.rounded-xl:hover::after {
+  height: 6px;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.1);
+}
+
+/* --- Tasteful Diyas on Headings --- */
+@keyframes softFlicker {
+  0% { opacity: 0.85; filter: drop-shadow(0 0 4px rgba(255, 165, 0, 0.6)); transform: scale(0.98); }
+  100% { opacity: 1; filter: drop-shadow(0 0 12px rgba(255, 215, 0, 1)); transform: scale(1.02); }
+}
+
+body.theme-diwali h1::after, body.theme-diwali h2::after {
+  content: ' 🪔';
+  display: inline-block;
+  animation: softFlicker 2s infinite alternate ease-in-out;
+  margin-left: 8px;
+}
+
+/* =========================================
+   2. HOLI (Vibrant Colors & Splashes)
+   ========================================= */
+body.theme-holi {
+  box-shadow: inset 0 0 100px rgba(233, 30, 99, 0.03);
+}
+
+@keyframes holiPulse {
+  0% { box-shadow: 0 4px 15px rgba(233, 30, 99, 0.1); border-color: rgba(233, 30, 99, 0.15); }
+  100% { box-shadow: 0 8px 25px rgba(156, 39, 176, 0.2); border-color: rgba(156, 39, 176, 0.15); }
+}
+
+body.theme-holi img {
+  border: 2px solid transparent;
+  animation: holiPulse 2.5s infinite alternate ease-in-out;
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.theme-holi img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(233, 30, 99, 0.2) !important;
+  border-color: rgba(233, 30, 99, 0.15) !important;
+  animation: none;
+}
+
+body.theme-holi .glass-panel-dark,
+body.theme-holi .bg-white.rounded-xl,
+body.theme-holi .bg-white.rounded-2xl {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+body.theme-holi .glass-panel::after,
+body.theme-holi .glass-panel-dark::after,
+body.theme-holi .bg-white.rounded-xl::after,
+body.theme-holi .bg-white.rounded-2xl::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #E91E63, #9C27B0, #2196F3, #FFEB3B, #FF5722);
+  background-size: 300% 100%;
+  animation: themeShimmer 4s infinite linear;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  box-shadow: 0 2px 10px rgba(233, 30, 99, 0.1);
+  transition: all 0.3s ease;
+  z-index: 50;
+  pointer-events: none;
+}
+
+body.theme-holi .glass-panel:hover::after,
+body.theme-holi .bg-white.rounded-xl:hover::after {
+  height: 6px;
+  box-shadow: 0 4px 15px rgba(233, 30, 99, 0.1);
+}
+
+body.theme-holi h1::after, body.theme-holi h2::after {
+  content: ' 🎨';
+  display: inline-block;
+  animation: softFlicker 2s infinite alternate ease-in-out;
+  margin-left: 8px;
+}
+
+/* =========================================
+   3. CHRISTMAS (Festive Red & Green)
+   ========================================= */
+body.theme-christmas {
+  box-shadow: inset 0 0 100px rgba(0, 204, 102, 0.03);
+}
+
+@keyframes christmasPulse {
+  0% { box-shadow: 0 4px 15px rgba(255, 0, 0, 0.1); border-color: rgba(255, 0, 0, 0.15); }
+  100% { box-shadow: 0 8px 25px rgba(0, 204, 102, 0.2); border-color: rgba(0, 204, 102, 0.15); }
+}
+
+body.theme-christmas img {
+  border: 2px solid transparent;
+  animation: christmasPulse 2.5s infinite alternate ease-in-out;
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.theme-christmas img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 0, 0, 0.2) !important;
+  border-color: rgba(255, 0, 0, 0.15) !important;
+  animation: none;
+}
+
+body.theme-christmas .glass-panel-dark,
+body.theme-christmas .bg-white.rounded-xl,
+body.theme-christmas .bg-white.rounded-2xl {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+body.theme-christmas .glass-panel::after,
+body.theme-christmas .glass-panel-dark::after,
+body.theme-christmas .bg-white.rounded-xl::after,
+body.theme-christmas .bg-white.rounded-2xl::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #FF0000, #FFFFFF, #00CC66, #FFFFFF, #FF0000);
+  background-size: 200% 100%;
+  animation: themeShimmer 3s infinite linear;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  box-shadow: 0 2px 10px rgba(255, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  z-index: 50;
+  pointer-events: none;
+}
+
+body.theme-christmas .glass-panel:hover::after,
+body.theme-christmas .bg-white.rounded-xl:hover::after {
+  height: 6px;
+  box-shadow: 0 4px 15px rgba(0, 204, 102, 0.1);
+}
+
+body.theme-christmas h1::after, body.theme-christmas h2::after {
+  content: ' 🎄';
+  display: inline-block;
+  animation: softFlicker 2s infinite alternate ease-in-out;
+  margin-left: 8px;
+}
+
+/* =========================================
+   4. REPUBLIC DAY (Tricolor)
+   ========================================= */
+body.theme-republic {
+  box-shadow: inset 0 0 100px rgba(30, 58, 138, 0.05);
+}
+
+@keyframes republicPulse {
+  0% { box-shadow: 0 2px 10px rgba(30, 58, 138, 0.15); border-color: rgba(30, 58, 138, 0.1); }
+  50% { box-shadow: 0 4px 15px rgba(217, 119, 6, 0.2); border-color: rgba(217, 119, 6, 0.15); }
+  100% { box-shadow: 0 2px 10px rgba(30, 58, 138, 0.15); border-color: rgba(30, 58, 138, 0.1); }
+}
+
+body.theme-republic img {
+  border: 1px solid transparent;
+  animation: republicPulse 4s infinite alternate ease-in-out;
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.theme-republic img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.3) !important;
+  border-color: rgba(30, 58, 138, 0.3) !important;
+  animation: none;
+}
+
+body.theme-republic .glass-panel-dark,
+body.theme-republic .bg-white.rounded-xl,
+body.theme-republic .bg-white.rounded-2xl {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+body.theme-republic .glass-panel::after,
+body.theme-republic .glass-panel-dark::after,
+body.theme-republic .bg-white.rounded-xl::after,
+body.theme-republic .bg-white.rounded-2xl::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #1E3A8A, #DBEAFE, #D97706, #DBEAFE, #1E3A8A);
+  background-size: 200% 100%;
+  animation: themeShimmer 4s infinite linear;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  box-shadow: 0 2px 5px rgba(30, 58, 138, 0.15);
+  transition: all 0.3s ease;
+  z-index: 50;
+  pointer-events: none;
+}
+
+body.theme-republic .glass-panel:hover::after,
+body.theme-republic .bg-white.rounded-xl:hover::after {
+  height: 5px;
+  box-shadow: 0 3px 10px rgba(30, 58, 138, 0.3);
+}
+
+body.theme-republic h1::after, body.theme-republic h2::after {
+  content: ' 🇮🇳 ☸️';
+  display: inline-block;
+  animation: softFlicker 3s infinite alternate ease-in-out;
+  margin-left: 8px;
+}
+
+/* =========================================
+   4b. INDEPENDENCE DAY (Tricolor)
+   ========================================= */
+body.theme-independence {
+  box-shadow: inset 0 0 100px rgba(234, 88, 12, 0.05);
+}
+
+@keyframes independencePulse {
+  0% { box-shadow: 0 2px 10px rgba(234, 88, 12, 0.2); border-color: rgba(234, 88, 12, 0.1); }
+  50% { box-shadow: 0 4px 15px rgba(22, 163, 74, 0.2); border-color: rgba(22, 163, 74, 0.15); }
+  100% { box-shadow: 0 2px 10px rgba(234, 88, 12, 0.2); border-color: rgba(234, 88, 12, 0.1); }
+}
+
+body.theme-independence img {
+  border: 1px solid transparent;
+  animation: independencePulse 4s infinite alternate ease-in-out;
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.theme-independence img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(234, 88, 12, 0.3) !important;
+  border-color: rgba(234, 88, 12, 0.3) !important;
+  animation: none;
+}
+
+body.theme-independence .glass-panel-dark,
+body.theme-independence .bg-white.rounded-xl,
+body.theme-independence .bg-white.rounded-2xl {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+body.theme-independence .glass-panel::after,
+body.theme-independence .glass-panel-dark::after,
+body.theme-independence .bg-white.rounded-xl::after,
+body.theme-independence .bg-white.rounded-2xl::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #EA580C, #FFEDD5, #16A34A, #FFEDD5, #EA580C);
+  background-size: 200% 100%;
+  animation: themeShimmer 4s infinite linear;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  box-shadow: 0 2px 5px rgba(234, 88, 12, 0.15);
+  transition: all 0.3s ease;
+  z-index: 50;
+  pointer-events: none;
+}
+
+body.theme-independence .glass-panel:hover::after,
+body.theme-independence .bg-white.rounded-xl:hover::after {
+  height: 5px;
+  box-shadow: 0 3px 10px rgba(234, 88, 12, 0.3);
+}
+
+body.theme-independence h1::after, body.theme-independence h2::after {
+  content: ' 🇮🇳 🪁';
+  display: inline-block;
+  animation: softFlicker 3s infinite alternate ease-in-out;
+  margin-left: 8px;
+}
+
+/* =========================================
+   5. NEW YEAR (Sparkling Silver & Gold)
+   ========================================= */
+body.theme-new-year {
+  box-shadow: inset 0 0 100px rgba(212, 175, 55, 0.03);
+}
+
+@keyframes newYearPulse {
+  0% { box-shadow: 0 4px 15px rgba(212, 175, 55, 0.1); border-color: rgba(212, 175, 55, 0.15); }
+  100% { box-shadow: 0 8px 25px rgba(192, 192, 192, 0.2); border-color: rgba(192, 192, 192, 0.15); }
+}
+
+body.theme-new-year img {
+  border: 2px solid transparent;
+  animation: newYearPulse 2.5s infinite alternate ease-in-out;
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.theme-new-year img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2) !important;
+  border-color: rgba(212, 175, 55, 0.15) !important;
+  animation: none;
+}
+
+body.theme-new-year .glass-panel-dark,
+body.theme-new-year .bg-white.rounded-xl,
+body.theme-new-year .bg-white.rounded-2xl {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+body.theme-new-year .glass-panel::after,
+body.theme-new-year .glass-panel-dark::after,
+body.theme-new-year .bg-white.rounded-xl::after,
+body.theme-new-year .bg-white.rounded-2xl::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #D4AF37, #C0C0C0, #FFFFFF, #C0C0C0, #D4AF37);
+  background-size: 200% 100%;
+  animation: themeShimmer 3s infinite linear;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  box-shadow: 0 2px 10px rgba(212, 175, 55, 0.1);
+  transition: all 0.3s ease;
+  z-index: 50;
+  pointer-events: none;
+}
+
+body.theme-new-year .glass-panel:hover::after,
+body.theme-new-year .bg-white.rounded-xl:hover::after {
+  height: 6px;
+  box-shadow: 0 4px 15px rgba(192, 192, 192, 0.1);
+}
+
+body.theme-new-year h1::after, body.theme-new-year h2::after {
+  content: ' 🎉';
+  display: inline-block;
+  animation: softFlicker 2s infinite alternate ease-in-out;
+  margin-left: 8px;
+}
+
+/* =========================================
+   6. DUSSEHRA (Vibrant Orange & Red)
+   ========================================= */
+body.theme-dussehra {
+  box-shadow: inset 0 0 100px rgba(255, 87, 34, 0.03);
+}
+
+@keyframes dussehraPulse {
+  0% { box-shadow: 0 4px 15px rgba(255, 87, 34, 0.1); border-color: rgba(255, 87, 34, 0.15); }
+  100% { box-shadow: 0 8px 25px rgba(255, 193, 7, 0.2); border-color: rgba(255, 193, 7, 0.15); }
+}
+
+body.theme-dussehra img {
+  border: 2px solid transparent;
+  animation: dussehraPulse 2.5s infinite alternate ease-in-out;
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.theme-dussehra img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 87, 34, 0.2) !important;
+  border-color: rgba(255, 87, 34, 0.15) !important;
+  animation: none;
+}
+
+body.theme-dussehra .glass-panel-dark,
+body.theme-dussehra .bg-white.rounded-xl,
+body.theme-dussehra .bg-white.rounded-2xl {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+body.theme-dussehra .glass-panel::after,
+body.theme-dussehra .glass-panel-dark::after,
+body.theme-dussehra .bg-white.rounded-xl::after,
+body.theme-dussehra .bg-white.rounded-2xl::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #FF5722, #FFC107, #FF9800, #FFC107, #FF5722);
+  background-size: 200% 100%;
+  animation: themeShimmer 3s infinite linear;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  box-shadow: 0 2px 10px rgba(255, 87, 34, 0.1);
+  transition: all 0.3s ease;
+  z-index: 50;
+  pointer-events: none;
+}
+
+body.theme-dussehra .glass-panel:hover::after,
+body.theme-dussehra .bg-white.rounded-xl:hover::after {
+  height: 6px;
+  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.1);
+}
+
+body.theme-dussehra h1::after, body.theme-dussehra h2::after {
+  content: ' 🏹';
+  display: inline-block;
+  animation: softFlicker 2s infinite alternate ease-in-out;
+  margin-left: 8px;
+}
+
+/* =========================================
+   7. GANDHI JAYANTI (Earthy Khadi & Greens)
+   ========================================= */
+body.theme-gandhi {
+  box-shadow: inset 0 0 100px rgba(141, 110, 99, 0.03);
+}
+
+@keyframes gandhiPulse {
+  0% { box-shadow: 0 4px 15px rgba(141, 110, 99, 0.1); border-color: rgba(141, 110, 99, 0.15); }
+  100% { box-shadow: 0 8px 25px rgba(76, 175, 80, 0.2); border-color: rgba(76, 175, 80, 0.15); }
+}
+
+body.theme-gandhi img {
+  border: 2px solid transparent;
+  animation: gandhiPulse 3s infinite alternate ease-in-out;
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.theme-gandhi img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(141, 110, 99, 0.2) !important;
+  border-color: rgba(141, 110, 99, 0.15) !important;
+  animation: none;
+}
+
+body.theme-gandhi .glass-panel-dark,
+body.theme-gandhi .bg-white.rounded-xl,
+body.theme-gandhi .bg-white.rounded-2xl {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+body.theme-gandhi .glass-panel::after,
+body.theme-gandhi .glass-panel-dark::after,
+body.theme-gandhi .bg-white.rounded-xl::after,
+body.theme-gandhi .bg-white.rounded-2xl::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #8D6E63, #D7CCC8, #4CAF50, #D7CCC8, #8D6E63);
+  background-size: 200% 100%;
+  animation: themeShimmer 4s infinite linear;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  box-shadow: 0 2px 10px rgba(141, 110, 99, 0.1);
+  transition: all 0.3s ease;
+  z-index: 50;
+  pointer-events: none;
+}
+
+body.theme-gandhi .glass-panel:hover::after,
+body.theme-gandhi .bg-white.rounded-xl:hover::after {
+  height: 6px;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.1);
+}
+
+body.theme-gandhi h1::after, body.theme-gandhi h2::after {
+  content: ' 🕊️';
+  display: inline-block;
+  animation: softFlicker 3s infinite alternate ease-in-out;
+  margin-left: 8px;
+}
+
+@keyframes themeShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* =========================================
+   8. RAKSHA BANDHAN (Pink & Gold)
+   ========================================= */
+body.theme-raksha {
+  box-shadow: inset 0 0 100px rgba(233, 30, 99, 0.03);
+}
+@keyframes rakshaPulse {
+  0% { box-shadow: 0 4px 15px rgba(233, 30, 99, 0.1); border-color: rgba(233, 30, 99, 0.15); }
+  100% { box-shadow: 0 8px 25px rgba(255, 215, 0, 0.2); border-color: rgba(255, 215, 0, 0.15); }
+}
+body.theme-raksha img {
+  border: 2px solid transparent;
+  animation: rakshaPulse 3s infinite alternate ease-in-out;
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+body.theme-raksha img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(233, 30, 99, 0.2) !important;
+  border-color: rgba(233, 30, 99, 0.15) !important;
+  animation: none;
+}
+body.theme-raksha .glass-panel-dark,
+body.theme-raksha .bg-white.rounded-xl,
+body.theme-raksha .bg-white.rounded-2xl {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+body.theme-raksha .glass-panel::after,
+body.theme-raksha .glass-panel-dark::after,
+body.theme-raksha .bg-white.rounded-xl::after,
+body.theme-raksha .bg-white.rounded-2xl::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #E91E63, #FFD700, #9C27B0, #FFD700, #E91E63);
+  background-size: 200% 100%;
+  animation: themeShimmer 3s infinite linear;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  box-shadow: 0 2px 10px rgba(233, 30, 99, 0.1);
+  transition: all 0.3s ease;
+  z-index: 50;
+  pointer-events: none;
+}
+body.theme-raksha .glass-panel:hover::after,
+body.theme-raksha .bg-white.rounded-xl:hover::after {
+  height: 6px;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.1);
+}
+body.theme-raksha h1::after, body.theme-raksha h2::after {
+  content: ' 🎀';
+  display: inline-block;
+  animation: softFlicker 2s infinite alternate ease-in-out;
+  margin-left: 8px;
+}
+
+/* =========================================
+   9. TEACHERS' DAY (Indigo & Gold)
+   ========================================= */
+body.theme-teachers {
+  box-shadow: inset 0 0 100px rgba(63, 81, 181, 0.03);
+}
+@keyframes teachersPulse {
+  0% { box-shadow: 0 4px 15px rgba(63, 81, 181, 0.1); border-color: rgba(63, 81, 181, 0.15); }
+  100% { box-shadow: 0 8px 25px rgba(255, 193, 7, 0.2); border-color: rgba(255, 193, 7, 0.15); }
+}
+body.theme-teachers img {
+  border: 2px solid transparent;
+  animation: teachersPulse 3s infinite alternate ease-in-out;
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+body.theme-teachers img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(63, 81, 181, 0.2) !important;
+  border-color: rgba(63, 81, 181, 0.15) !important;
+  animation: none;
+}
+body.theme-teachers .glass-panel-dark,
+body.theme-teachers .bg-white.rounded-xl,
+body.theme-teachers .bg-white.rounded-2xl {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+body.theme-teachers .glass-panel::after,
+body.theme-teachers .glass-panel-dark::after,
+body.theme-teachers .bg-white.rounded-xl::after,
+body.theme-teachers .bg-white.rounded-2xl::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3F51B5, #FFC107, #1A237E, #FFC107, #3F51B5);
+  background-size: 200% 100%;
+  animation: themeShimmer 3s infinite linear;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  box-shadow: 0 2px 10px rgba(63, 81, 181, 0.1);
+  transition: all 0.3s ease;
+  z-index: 50;
+  pointer-events: none;
+}
+body.theme-teachers .glass-panel:hover::after,
+body.theme-teachers .bg-white.rounded-xl:hover::after {
+  height: 6px;
+  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.1);
+}
+body.theme-teachers h1::after, body.theme-teachers h2::after {
+  content: ' 📚';
+  display: inline-block;
+  animation: softFlicker 2s infinite alternate ease-in-out;
+  margin-left: 8px;
+}
+
+/* =========================================
+   10. GANESH CHATURTHI (Terracotta & Goldenrod)
+   ========================================= */
+body.theme-ganesh {
+  box-shadow: inset 0 0 100px rgba(183, 65, 14, 0.03);
+}
+@keyframes ganeshPulse {
+  0% { box-shadow: 0 4px 15px rgba(183, 65, 14, 0.1); border-color: rgba(183, 65, 14, 0.15); }
+  100% { box-shadow: 0 8px 25px rgba(218, 165, 32, 0.2); border-color: rgba(218, 165, 32, 0.15); }
+}
+body.theme-ganesh img {
+  border: 2px solid transparent;
+  animation: ganeshPulse 3s infinite alternate ease-in-out;
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+body.theme-ganesh img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(183, 65, 14, 0.2) !important;
+  border-color: rgba(183, 65, 14, 0.15) !important;
+  animation: none;
+}
+body.theme-ganesh .glass-panel-dark,
+body.theme-ganesh .bg-white.rounded-xl,
+body.theme-ganesh .bg-white.rounded-2xl {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+body.theme-ganesh .glass-panel::after,
+body.theme-ganesh .glass-panel-dark::after,
+body.theme-ganesh .bg-white.rounded-xl::after,
+body.theme-ganesh .bg-white.rounded-2xl::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #B7410E, #DAA520, #FDECE6, #DAA520, #B7410E);
+  background-size: 200% 100%;
+  animation: themeShimmer 3s infinite linear;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  box-shadow: 0 2px 10px rgba(183, 65, 14, 0.1);
+  transition: all 0.3s ease;
+  z-index: 50;
+  pointer-events: none;
+}
+body.theme-ganesh .glass-panel:hover::after,
+body.theme-ganesh .bg-white.rounded-xl:hover::after {
+  height: 6px;
+  box-shadow: 0 4px 15px rgba(218, 165, 32, 0.1);
+}
+body.theme-ganesh h1::after, body.theme-ganesh h2::after {
+  content: '';
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  background: url('/ganesh-icon.png') no-repeat center center;
+  background-size: contain;
+  animation: softFlicker 2s infinite alternate ease-in-out;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+/* =========================================
+   11. CHILDREN'S DAY (Bright Aqua & Pink)
+   ========================================= */
+body.theme-children {
+  box-shadow: inset 0 0 100px rgba(0, 188, 212, 0.03);
+}
+@keyframes childrenPulse {
+  0% { box-shadow: 0 4px 15px rgba(0, 188, 212, 0.1); border-color: rgba(0, 188, 212, 0.15); }
+  100% { box-shadow: 0 8px 25px rgba(255, 64, 129, 0.2); border-color: rgba(255, 64, 129, 0.15); }
+}
+body.theme-children img {
+  border: 2px solid transparent;
+  animation: childrenPulse 3s infinite alternate ease-in-out;
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+body.theme-children img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 188, 212, 0.2) !important;
+  border-color: rgba(0, 188, 212, 0.15) !important;
+  animation: none;
+}
+body.theme-children .glass-panel-dark,
+body.theme-children .bg-white.rounded-xl,
+body.theme-children .bg-white.rounded-2xl {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+body.theme-children .glass-panel::after,
+body.theme-children .glass-panel-dark::after,
+body.theme-children .bg-white.rounded-xl::after,
+body.theme-children .bg-white.rounded-2xl::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #00BCD4, #FFEB3B, #FF4081, #FFEB3B, #00BCD4);
+  background-size: 200% 100%;
+  animation: themeShimmer 3s infinite linear;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  box-shadow: 0 2px 10px rgba(0, 188, 212, 0.1);
+  transition: all 0.3s ease;
+  z-index: 50;
+  pointer-events: none;
+}
+body.theme-children .glass-panel:hover::after,
+body.theme-children .bg-white.rounded-xl:hover::after {
+  height: 6px;
+  box-shadow: 0 4px 15px rgba(255, 64, 129, 0.1);
+}
+body.theme-children h1::after, body.theme-children h2::after {
+  content: ' 🎈';
+  display: inline-block;
+  animation: softFlicker 2s infinite alternate ease-in-out;
+  margin-left: 8px;
+}
