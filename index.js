@@ -14,6 +14,7 @@ import admissionRoute from "./routes/admission.route.js";
 import cbseDisclosureRoutes from "./routes/cbseDisclosure.route.js";
 import cmsRoutes from "./routes/cms.route.js";
 import topStudentRoutes from "./routes/topStudents.route.js";
+import razorpayRoute from "./utils/razorpay.js";
 import { initSupabaseDb } from "./utils/supabaseDb.js";
 
 // Initialize
@@ -67,6 +68,7 @@ app.use("/v1/api/admission", admissionRoute);
 app.use("/v1/api/cbse-disclosure", cbseDisclosureRoutes);
 app.use("/v1/api/cms", cmsRoutes);
 app.use("/v1/api/top-students", topStudentRoutes);
+app.use("/v1/api/razorpay", razorpayRoute);
 
 // Health check
 app.get("/health", (req, res) => res.send("✅ Server is up and healthy"));

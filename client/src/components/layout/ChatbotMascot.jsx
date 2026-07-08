@@ -414,7 +414,9 @@ const ChatbotMascot = () => {
                     <img src={getMascotImage()} alt="Shrushit" className="w-10 h-10 rounded-full bg-white object-cover border-2 border-rose-200 shadow-md shrink-0" />
                   </div>
                   <div>
-                    <h3 className="font-heading font-black text-base leading-tight text-rose-950">Shrushit Bot</h3>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <span className="text-[10px] font-black tracking-widest uppercase opacity-85 text-rose-800">Online</span>
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2.5">

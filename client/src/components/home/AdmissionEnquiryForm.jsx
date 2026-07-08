@@ -2,7 +2,7 @@ import axios from "axios";
 import { X, GraduationCap, User, Users, Calendar, Phone, Mail, MapPin, Award, CheckCircle2, CreditCard, QrCode, ArrowLeft } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { API } from "../../assets/constant";
+import { API, loadRazorpayScript } from "../../assets/constant";
 import rmcp_campus from "../../assets/img/rmcp_campus.png";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -57,48 +57,118 @@ const AdmissionEnquiryForm = ({ setShowEnq }) => {
   const handlePaymentAndSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    const toastId = toast.loading("Processing Payment & Submitting Enquiry...");
-
-    // Simulate payment transaction ID
-    const generatedTxnId = "TXN-" + Math.floor(10000000 + Math.random() * 90000000);
-    setTransactionId(generatedTxnId);
-
-    const payload = {
-      ...formData,
-      paymentStatus: "paid",
-      transactionId: generatedTxnId,
-    };
+    const toastId = toast.loading("Initiating Payment...");
 
     try {
-      const res = await axios.post(`${API}/api/enquiry`, payload);
-      if (res.status === 201) {
-        const receivedToken = res.data.enquiry.tokenNumber;
-        setTokenNumber(receivedToken);
+      // 1. Create Razorpay order on backend
+      const orderAmount = 1000 * 100; // ₹1,000 in paise
+      const orderRes = await axios.post(`${API}/api/razorpay`, {
+        amount: orderAmount,
+        currency: "INR",
+        receipt: `enq_${Date.now()}`,
+      });
+
+      const orderData = orderRes.data;
+
+      // 2. Load Razorpay script
+      const scriptLoaded = await loadRazorpayScript();
+      if (!scriptLoaded) {
         toast.update(toastId, {
-          render: "Payment Successful & Enquiry Submitted!",
-          type: "success",
+          render: "Razorpay SDK failed to load. Are you online?",
+          type: "error",
           isLoading: false,
-          autoClose: 3000,
+          autoClose: 4000,
           closeButton: true,
         });
-        setStep(3);
-        // Automatically send to WhatsApp
-        setTimeout(() => {
-          handleSendWhatsApp(receivedToken, generatedTxnId);
-        }, 1000);
-      } else {
-        throw new Error("Failed to submit");
+        setSubmitting(false);
+        return;
       }
+
+      toast.update(toastId, {
+        render: "Opening payment checkout...",
+        type: "info",
+        isLoading: false,
+        autoClose: 2000,
+      });
+
+      // 3. Configure and open Razorpay checkout modal
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID || "rzp_test_5173RMCPDummyKeyID",
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: "RMCP Academy",
+        description: "Admission Enquiry Registration Fee",
+        order_id: orderData.id,
+        handler: async function (response) {
+          const finalToastId = toast.loading("Confirming Payment & Submitting Enquiry...");
+          const paymentId = response.razorpay_payment_id;
+          setTransactionId(paymentId);
+
+          const payload = {
+            ...formData,
+            paymentStatus: "paid",
+            transactionId: paymentId,
+          };
+
+          try {
+            const res = await axios.post(`${API}/api/enquiry`, payload);
+            if (res.status === 201) {
+              const receivedToken = res.data.enquiry.tokenNumber;
+              setTokenNumber(receivedToken);
+              toast.update(finalToastId, {
+                render: "Payment Successful & Enquiry Submitted!",
+                type: "success",
+                isLoading: false,
+                autoClose: 3000,
+                closeButton: true,
+              });
+              setStep(3);
+              // Automatically send to WhatsApp
+              setTimeout(() => {
+                handleSendWhatsApp(receivedToken, paymentId);
+              }, 1000);
+            } else {
+              throw new Error("Failed to submit enquiry details");
+            }
+          } catch (err) {
+            toast.update(finalToastId, {
+              render: "Payment confirmed, but failed to save enquiry. Please contact support with payment ID: " + paymentId,
+              type: "error",
+              isLoading: false,
+              autoClose: 8000,
+              closeButton: true,
+            });
+            console.error(err);
+          }
+        },
+        prefill: {
+          name: formData.fatherName,
+          email: formData.email,
+          contact: formData.fatherMobile,
+        },
+        theme: {
+          color: "#0ea5e9", // Sky/Blue theme matching the website
+        },
+        modal: {
+          ondismiss: function () {
+            toast.warn("Payment checkout closed.");
+            setSubmitting(false);
+          }
+        }
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+
     } catch (err) {
       toast.update(toastId, {
-        render: "Failed to Submit Enquiry. Please try again.",
+        render: "Failed to initiate payment. Please try again.",
         type: "error",
         isLoading: false,
         autoClose: 4000,
         closeButton: true,
       });
-      console.error(err);
-    } finally {
+      console.error("Razorpay order creation error:", err);
       setSubmitting(false);
     }
   };
