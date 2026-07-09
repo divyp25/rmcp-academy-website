@@ -242,7 +242,7 @@ const Hero = ({ setShowEnq }) => {
         <div className="relative w-full h-screen overflow-hidden flex flex-col lg:flex-row bg-brand-text">
         
         {/* Admission Notification Banner */}
-        {cmsData?.show_admission_notification !== false && cmsData?.show_admission_notification !== "false" && (
+        {(cmsData?.show_admission_notification === true || cmsData?.show_admission_notification === "true") && (
           <div className="absolute top-[100px] sm:top-[112px] left-1/2 -translate-x-1/2 z-40 w-[92%] max-w-4xl pointer-events-auto">
             <motion.div
               initial={{ opacity: 0, y: -15, scale: 0.98 }}

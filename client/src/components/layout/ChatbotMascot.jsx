@@ -94,8 +94,14 @@ const ChatbotMascot = () => {
     setIsOpen(false);
   };
 
-  const getMascotImage = () => {
-    if (!activeFestival) return '/mascots/mascot_default.png';
+  const getMascotImage = (staticOnly = false) => {
+    if (!activeFestival) {
+      if (!staticOnly) {
+        if (isWaving) return '/mascots/mascot_default_wave.png';
+        if (isBlinking) return '/mascots/mascot_default_closed.png';
+      }
+      return '/mascots/mascot_default_open.png';
+    }
     const name = activeFestival.name.toLowerCase();
     if (name.includes('new year')) return '/mascots/mascot_newyear.png';
     if (name.includes('republic')) return '/mascots/mascot_republic.png';
@@ -297,67 +303,8 @@ const ChatbotMascot = () => {
 
   // Determine motion variants for mascot character based on state
   const getMascotVariants = () => {
-    if (isTyping) {
-      return {
-        animate: {
-          rotate: [-3, 3, -3],
-          y: [0, -2, 0],
-          transition: {
-            repeat: Infinity,
-            duration: 0.8,
-            ease: "easeInOut"
-          }
-        }
-      };
-    }
-
-    if (mascotReaction === "speak-bounce") {
-      return {
-        animate: {
-          scale: [1, 1.15, 1],
-          y: [0, -12, 0],
-          transition: {
-            duration: 0.4,
-            ease: "easeOut"
-          }
-        }
-      };
-    }
-
-    if (mascotReaction === "nod") {
-      return {
-        animate: {
-          rotate: [0, -8, 0],
-          y: [0, 4, 0],
-          transition: {
-            duration: 0.3,
-            ease: "easeInOut"
-          }
-        }
-      };
-    }
-
-    if (isWaving) {
-      return {
-        animate: {
-          rotate: [0, 12, -4, 12, 0],
-          transition: {
-            duration: 1.2
-          }
-        }
-      };
-    }
-
-    // Default Idle breathing bob
     return {
-      animate: {
-        y: [0, -5, 0],
-        transition: {
-          repeat: Infinity,
-          duration: IDLE_BOUNCE_DURATION,
-          ease: "easeInOut"
-        }
-      }
+      animate: {}
     };
   };
 
@@ -374,10 +321,10 @@ const ChatbotMascot = () => {
               animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ y: 120, opacity: 0, scale: 0.8 }}
               transition={{ type: "spring", stiffness: 260, damping: 20 }}
-              className="hidden md:flex flex-col items-center select-none w-28 shrink-0 relative pointer-events-none"
+              className="hidden md:flex flex-col items-center select-none w-40 shrink-0 relative pointer-events-none"
             >
               <motion.div
-                className="w-24 h-48 relative overflow-visible"
+                className="w-36 h-72 relative overflow-visible"
                 variants={getMascotVariants()}
                 animate="animate"
               >
@@ -386,12 +333,11 @@ const ChatbotMascot = () => {
                   alt="Shrushit Interactive Avatar"
                   className="w-full h-full object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.15)]"
                 />
-                
                 {/* Blinking eyes simulation overlay */}
-                {isBlinking && (
+                {isBlinking && activeFestival && (
                   <div className="absolute top-[28%] left-[38%] w-1.5 h-0.5 bg-[#1e293b] rounded-full"></div>
                 )}
-                {isBlinking && (
+                {isBlinking && activeFestival && (
                   <div className="absolute top-[28%] right-[38%] w-1.5 h-0.5 bg-[#1e293b] rounded-full"></div>
                 )}
               </motion.div>
@@ -411,7 +357,7 @@ const ChatbotMascot = () => {
               <div className="bg-gradient-to-r from-[#ffe4e6] to-[#fdf2f8] border-b border-rose-100 p-4 py-4.5 flex justify-between items-center shadow-md select-none w-full">
                 <div className="flex items-center gap-3">
                   <div className="relative">
-                    <img src={getMascotImage()} alt="Shrushit" className="w-10 h-10 rounded-full bg-white object-cover border-2 border-rose-200 shadow-md shrink-0" />
+                    <img src="/mascots/mascot_head.png" alt="Shrushit" className="w-10 h-10 object-contain shrink-0" />
                   </div>
                   <div>
                     <div className="flex items-center gap-1.5 mt-0.5">
@@ -619,31 +565,18 @@ const ChatbotMascot = () => {
               repeat: Infinity,
               ease: "easeInOut"
             }}
-            className="absolute w-32 h-32 rounded-full bg-gradient-to-r from-rose-200/40 to-pink-100/40 blur-xl pointer-events-none z-0"
+            className="absolute w-56 h-56 rounded-full bg-gradient-to-r from-rose-200/40 to-pink-100/40 blur-xl pointer-events-none z-0"
           ></motion.div>
 
           {/* Launcher container - fully transparent */}
           <motion.div
             whileHover={{ scale: 1.08 }}
             onClick={() => setIsOpen(true)}
-            className="relative w-24 h-24 flex items-center justify-center cursor-pointer overflow-visible z-10 select-none"
+            className="relative w-36 h-36 flex items-center justify-center cursor-pointer overflow-visible z-10 select-none"
           >
             {/* Mascot Image cutout - clean shadow */}
             <motion.div
               className="w-[125%] h-[125%] absolute -bottom-1"
-              animate={isWaving ? {
-                rotate: [0, 12, -4, 12, 0],
-                y: [0, -5, 0]
-              } : {
-                y: [0, -5, 0]
-              }}
-              transition={isWaving ? {
-                duration: 1.2
-              } : {
-                repeat: Infinity,
-                duration: 2.5,
-                ease: "easeInOut"
-              }}
             >
               <img
                 src={getMascotImage()}

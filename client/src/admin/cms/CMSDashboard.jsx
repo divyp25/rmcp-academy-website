@@ -148,7 +148,9 @@ export default function CMSDashboard() {
           className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xl"
         >
           <form className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {Object.keys(formData).map((key) => {
+            {Object.keys(formData)
+              .filter((key) => key !== 'show_admissions_popup')
+              .map((key) => {
               const val = formData[key];
               const isBoolean = typeof val === 'boolean' || key.startsWith("show_") || key.startsWith("enable_");
               const isLongText = !isBoolean && (key.includes("description") || key.includes("content") || key.includes("subtitle") || key.includes("message"));
@@ -157,16 +159,19 @@ export default function CMSDashboard() {
               if (isBoolean) {
                 const isChecked = typeof val === 'string' ? val === 'true' : !!val;
                 return (
-                  <div key={key} className="flex items-center justify-between p-5 bg-slate-50 border border-slate-200 rounded-xl hover:border-brand-blue/30 transition-all duration-300 shadow-inner">
+                  <div 
+                    key={key} 
+                    onClick={() => setFormData({ ...formData, [key]: !isChecked })}
+                    className="flex items-center justify-between p-5 bg-slate-50 border border-slate-200 rounded-xl hover:border-brand-blue/30 transition-all duration-300 shadow-inner cursor-pointer select-none"
+                  >
                     <div>
-                      <label className="text-xs font-bold text-slate-500 tracking-widest uppercase block">
+                      <label className="text-xs font-bold text-slate-500 tracking-widest uppercase block cursor-pointer">
                         {formatKey(key)}
                       </label>
                       <span className="text-[10px] text-slate-400 font-bold uppercase mt-1.5 block">Toggle Visibility</span>
                     </div>
                     <button
                       type="button"
-                      onClick={() => setFormData({ ...formData, [key]: !isChecked })}
                       className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${isChecked ? 'bg-brand-blue' : 'bg-slate-300'}`}
                     >
                       <span
